@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="12dp"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
 
     <LinearLayout
@@ -30,7 +31,7 @@
             android:layout_width="0dp"
             android:text="Search"
             android:layout_height="45dp"
-            android:background="@drawable/background_button"
+            android:background="#cca978"
             android:layout_weight="30" />
 
     </LinearLayout>

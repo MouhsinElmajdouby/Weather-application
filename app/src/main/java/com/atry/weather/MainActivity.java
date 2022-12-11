@@ -11,6 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -102,32 +108,43 @@ public class MainActivity extends AppCompatActivity {
                                 tvmax.setText("Temperature maximale :"+new DecimalFormat("##.##").format(max)+ " °C");
 
                                 double pressure = main.get("pressure").getAsDouble();
-                                tvPre.setText("la pression :"+pressure +" °Pa");
+                                tvPre.setText("la pression d'air :"+pressure +" °hPa");
 
                                 double hum = main.get("humidity").getAsDouble();
-                                tvHum.setText("humidite : "+hum +" degre");
+                                tvHum.setText("humidite : "+hum +" %");
 
                                 JsonObject wind = result.get("wind").getAsJsonObject();
                                 double speed = wind.get("speed").getAsDouble();
-                                tvspeed.setText( "la vitesse de wind : " +speed +" m/s");
+                                tvspeed.setText( "la vitesse de wind : " +speed +" km/h");
 
                                 double degre = wind.get("deg").getAsDouble();
                                 tvdegre.setText("le degre de wind : "+degre +" °");
-
-
-
-
-
-
-
-
-
-
 
                             }
 
                         }
                     });
+
+
+
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&&units=metrics&appid="+API_KEY;
+
+// Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                       // textView.setText("Response is: " + response.substring(0,500));
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //textView.setText("That didn't work!");
+            }
+        });
 
     }
 
